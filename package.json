@@ -1,0 +1,22 @@
+{
+  "dependencies": {
+    "yarn": "^1.22.22"
+  },
+  "name": "8-puzzle",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {
+    "@types/node": "^24.3.0",
+    "typescript": "^5.9.2"
+  },
+  "scripts": {
+    "build": "tsc puzzle.ts",
+    "start": "tsc puzzle.ts && node puzzle.js",
+    "dev": "tsc puzzle.ts && node puzzle.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
