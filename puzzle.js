@@ -66,6 +66,24 @@ function reconstructPath(node) {
     }
     return path;
 }
+function printState(state, title) {
+    console.log("\n".concat(title, ":"));
+    for (var i = 0; i < 3; i++) {
+        var row = state[i].map(function (cell) { return cell === 0 ? '_' : cell.toString(); }).join(' ');
+        console.log("| ".concat(row, " |"));
+    }
+}
+function applyMoves(initialState, moves) {
+    var currentState = cloneState(initialState);
+    for (var _i = 0, moves_1 = moves; _i < moves_1.length; _i++) {
+        var move = moves_1[_i];
+        var newState = moveTile(currentState, move);
+        if (newState) {
+            currentState = newState;
+        }
+    }
+    return currentState;
+}
 // ==========================
 // Heurísticas
 // ==========================
@@ -163,14 +181,29 @@ if (require.main === module) {
         [4, 5, 6],
         [7, 8, 0],
     ];
-    console.log("=== BFS ===");
+    // Mostra estado inicial e objetivo
+    printState(start, "ESTADO INICIAL");
+    printState(goal, "ESTADO OBJETIVO");
+    console.log("\n" + "=".repeat(40));
+    console.log("=== BUSCA EM LARGURA (BFS) ===");
     console.time("BFS");
     var bfsResult = bfs(start, goal);
     console.timeEnd("BFS");
     console.log("Solução BFS:", bfsResult);
-    console.log("\n=== Greedy ===");
+    if (bfsResult) {
+        var finalStateBFS = applyMoves(start, bfsResult);
+        printState(finalStateBFS, "RESULTADO FINAL BFS");
+        console.log("N\u00FAmero de movimentos: ".concat(bfsResult.length));
+    }
+    console.log("\n" + "=".repeat(40));
+    console.log("=== BUSCA GULOSA (Greedy) ===");
     console.time("Greedy");
     var greedyResult = greedy(start, goal);
     console.timeEnd("Greedy");
     console.log("Solução Greedy:", greedyResult);
+    if (greedyResult) {
+        var finalStateGreedy = applyMoves(start, greedyResult);
+        printState(finalStateGreedy, "RESULTADO FINAL GREEDY");
+        console.log("N\u00FAmero de movimentos: ".concat(greedyResult.length));
+    }
 }
